@@ -94,13 +94,15 @@ const renderSubComponent = <TData,>({
                             {round[column.accessor]}
                           </span>
                         </>
-                      ) : (
-                        <span>
+                      ) : column.accessor === 'draw' ? (
+                        <span className='text-xs text-yellow-500'>
                           {typeof round[column.accessor] === 'boolean' &&
                           round[column.accessor] === true
                             ? 'DRAW'
-                            : String(round[column.accessor])}
+                            : ''}
                         </span>
+                      ) : (
+                        <span>{String(round[column.accessor])}</span>
                       )}
                     </TableCell>
                   ))}
