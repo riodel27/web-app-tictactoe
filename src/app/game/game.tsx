@@ -16,7 +16,7 @@ import {
   isEmptyObject,
 } from '@/lib/utils';
 import { createGameSession } from '@/services';
-import Board from './board2';
+import Board from './board';
 import { ChooseFirstMoveDialog, GameResultDialog } from './dialog';
 import { NewGameForm } from './form';
 

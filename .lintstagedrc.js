@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   // Run type-check on changes to TypeScript files
-  '**/*.ts?(x)': () => 'yarn type-check',
+  '**/*.ts?(x)': () => 'yarn type-check', //FIXME: exclude .next folder
   // Lint & Prettify TS and JS files
   '**/*.@(ts|tsx|js|jsx)!(|(d).ts)': (filenames) => {
     const filteredFilenames = filenames.filter(

@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 
-import NewBoard from './board2';
+import NewBoard from './board';
 
 interface GameResultDialogProps {
   open: boolean;

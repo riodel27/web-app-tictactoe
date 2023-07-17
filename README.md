@@ -30,6 +30,7 @@ Please make sure you have Docker installed and running before proceeding with th
 Here is a roadmap for further enhancements to consider:
 
 - [&#x2713;]
+- [ ] Feature: set timer/time limit on each move.
 
 ## Getting Started
 
