@@ -76,3 +76,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .board-row::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+
+  .winner {
+    color: #38a169;
+  }
+}
