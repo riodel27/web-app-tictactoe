@@ -32,10 +32,7 @@ export async function getGamesSession(
 
     const url = `${process.env.API_URL}/api/game/list?${queryParams}`;
 
-    const response = await fetch(url, {
-      mode: 'no-cors',
-      referrerPolicy: 'unsafe-url',
-    });
+    const response = await fetch(url);
 
     const data = await response.json();
 
