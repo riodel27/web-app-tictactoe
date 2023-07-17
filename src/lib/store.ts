@@ -6,8 +6,11 @@ interface GameSessionState {
   player2: string;
   scoreboard: ScoreboardEntry[];
   rounds: GameRound[];
+  // eslint-disable-next-line no-unused-vars
   updateScoreBoard: (player: ScoreboardEntry) => void;
+  // eslint-disable-next-line no-unused-vars
   addRound: (round: GameRound) => void;
+  // eslint-disable-next-line no-unused-vars
   setPlayers: (player1: string, player2: string) => void;
   reset: () => void;
 }

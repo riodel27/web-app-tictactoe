@@ -151,11 +151,11 @@ export const GameResultDialog: React.FC<GameResultDialogProps> = ({
           </DialogTitle>
         </DialogHeader>
 
-        <>
+        <div className='pointer-events-none opacity-50'>
           <Separator className='my-5' />
           <NewBoard squares={squares} />
           <Separator className='my-5' />
-        </>
+        </div>
 
         <DialogFooter>
           {loading ? (
