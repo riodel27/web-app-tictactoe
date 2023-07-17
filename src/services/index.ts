@@ -8,8 +8,6 @@ export async function createGameSession(values: CreateGameSessionBody) {
       headers: {
         'Content-Type': 'application/json',
       },
-      mode: 'no-cors',
-      referrerPolicy: 'unsafe-url',
     });
 
     return response;
