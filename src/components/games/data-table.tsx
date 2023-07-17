@@ -32,7 +32,7 @@ import {
   TableHeader,
   TableRow,
 } from '../ui/table';
-import Board from './Board2';
+import Board from './Board';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
