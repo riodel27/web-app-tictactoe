@@ -4,6 +4,7 @@ import { ExtendedGameSession, GameRound, RoundColumn } from '@/types';
 import {
   ColumnDef,
   ColumnFiltersState,
+  PaginationState,
   Row,
   SortingState,
   VisibilityState,
@@ -13,7 +14,6 @@ import {
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
@@ -33,10 +33,14 @@ import {
   TableRow,
 } from '../ui/table';
 import Board from './Board';
+import { DataTablePagination } from './data-table-pagination';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
+  pagination: PaginationState;
+  totalPages: number | undefined;
 }
 
 const renderSubComponent = <TData,>({
@@ -123,6 +127,9 @@ const renderSubComponent = <TData,>({
 export function DataTable<TData, TValue>({
   columns,
   data,
+  setPagination,
+  pagination,
+  totalPages,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -145,11 +152,13 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
+    pageCount: totalPages ?? -1,
     state: {
       sorting,
       columnVisibility,
       rowSelection,
       columnFilters,
+      pagination,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
@@ -158,12 +167,13 @@ export function DataTable<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getRowCanExpand: () => true,
     getExpandedRowModel: getExpandedRowModel(),
+    onPaginationChange: setPagination,
+    manualPagination: true,
   });
 
   return (
@@ -224,6 +234,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} />
     </div>
   );
 }

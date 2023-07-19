@@ -17,16 +17,24 @@ export async function createGameSession(values: CreateGameSessionBody) {
   }
 }
 
-export async function getGamesSession(
-  query = {
-    populate: 'rounds',
-    sortBy: 'createdAt:desc',
-    limit: '10000',
-    page: '1',
-  }
-): Promise<GameSessionResultData> {
+export async function getGamesSession(query: {
+  limit: number;
+  page: number;
+  populate?: string;
+  sortBy?: string;
+}): Promise<GameSessionResultData> {
   try {
-    const queryParams = new URLSearchParams(query);
+    const limit = query?.limit ? JSON.stringify(query.limit) : '100';
+    const page = query?.page ? JSON.stringify(query.page) : '1';
+    const populate = query.populate ?? 'rounds';
+    const sortBy = query?.sortBy ?? 'createdAt:desc';
+
+    const queryParams = new URLSearchParams({
+      populate: populate,
+      sortBy: sortBy,
+      limit: limit,
+      page: page,
+    });
 
     const url = `${process.env.API_URL}/api/game/list?${queryParams}`;
 
