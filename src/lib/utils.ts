@@ -131,3 +131,17 @@ export const calculateWinningIndexes = (
 
   return null;
 };
+
+export function formatReadableDate(dateValue: string): string {
+  const formattedDate = new Date(dateValue).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short',
+  });
+
+  return formattedDate;
+}
