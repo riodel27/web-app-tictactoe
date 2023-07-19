@@ -42,6 +42,7 @@ const Square: React.FC<SquareProps> = ({
   return (
     <div className='h-16 md:h-28'>
       <button
+        data-testid='board-square-button'
         className={`flex h-full w-full items-center justify-center ${hasTopBorder} ${hasRightBorder} ${hasBottomBorder} ${hasLeftBorder} border-gray-400 bg-white text-2xl font-bold`}
         onClick={onSquareClick}
         onMouseEnter={handleMouseEnter}

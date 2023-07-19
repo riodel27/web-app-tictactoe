@@ -2,6 +2,7 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 
+import { formatReadableDate } from '@/lib/utils';
 import { ExtendedGameSession } from '@/types';
 import { Badge } from '../ui/badge';
 import {
@@ -75,5 +76,18 @@ export const columns: ColumnDef<ExtendedGameSession>[] = [
     accessorKey: 'scoreBoard',
     header: 'Score Board',
     cell: ({ row }) => <DataTableRowActions row={row} />,
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'Date',
+    cell: ({ row }) => {
+      return (
+        <div className='text-sm font-medium text-gray-600'>
+          {formatReadableDate(row.getValue('createdAt'))}
+        </div>
+      );
+    },
+    enableSorting: false,
+    enableHiding: false,
   },
 ];
