@@ -54,7 +54,11 @@ const Game: React.FC = () => {
   const [history, setHistory] = useState<Array<Array<string | null>>>([
     Array(9).fill(null),
   ]);
+  const [cacheFirstMoveNextSquares, setCacheFirstMoveNextSquares] = useState<
+    Array<string | null> | undefined
+  >(undefined);
   const [currentMove, setCurrentMove] = useState(0);
+
   // Determine the current player's turn based on the current move count. The first move is always assigned to "X".
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -62,6 +66,9 @@ const Game: React.FC = () => {
   const handlePlay = (nextSquares: Array<string | null>) => {
     if (isEmptyObject(avatars)) {
       setOpenChooseFirstMoveDialog(true);
+
+      // Cache the first move to be used later when deciding the initial player's turn by setting the cacheFirstMoveNextSquares with the nextSquares data.
+      setCacheFirstMoveNextSquares(nextSquares);
     } else {
       const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
       setHistory(nextHistory);
@@ -115,15 +122,13 @@ const Game: React.FC = () => {
       const response = await createGameSession(gameData);
 
       if (response?.status === 201) {
-        reset();
-        router.refresh(); // FIXME: it's not clearing the cache.
         router.push('/');
+        reset();
+        setLoading(false);
       }
     } catch (error) {
-      console.error(error);
-    } finally {
-      router.refresh();
       setLoading(false);
+      console.error(error);
     }
   };
 
@@ -177,6 +182,20 @@ const Game: React.FC = () => {
       setChooseFirstMoveDialogvalue('');
     }
   }, [openChooseFirstMoveDialog]);
+
+  useEffect(() => {
+    if (cacheFirstMoveNextSquares) {
+      if (!isEmptyObject(avatars)) {
+        const nextHistory = [
+          ...history.slice(0, currentMove + 1),
+          cacheFirstMoveNextSquares,
+        ];
+        setHistory(nextHistory);
+        setCurrentMove(nextHistory.length - 1);
+        setCacheFirstMoveNextSquares(undefined);
+      }
+    }
+  }, [avatars]);
 
   useEffect(() => {
     // Clean-up function
@@ -299,9 +318,7 @@ const Game: React.FC = () => {
           />
         </>
       ) : (
-        <>
-          <NewGameForm />
-        </>
+        <>{!loading && <NewGameForm />}</>
       )}
     </div>
   );
